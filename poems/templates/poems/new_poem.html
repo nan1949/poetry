@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'poems/base.html' %}
+
+{%  block content %}
+  <p>
+      <a href="/authors/{{ author.id }}/">{{ author }}</a>
+  </p>
+
+  <p>Add a new poem</p>
+  <form action="/new_poem/{{ author.id }}/" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="'submit">add poem</button>
+  </form>
+{% endblock content %}
+</html>

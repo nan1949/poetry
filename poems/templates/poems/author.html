@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'poems/base.html' %}
+
+{% block header %}
+  <h3>{{ author }}</h3>
+{% endblock header %}
+
+{% block content %}
+  <p>
+      <a href="/new_poem/{{ author.id }}">add new poem</a>
+  </p>
+
+  {% for poem in poems %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>
+                <a href="/authors/{{ author.id }}/{{ poem.id }}/">{{ poem.title }}</a>
+                <small>
+                    {{ poem.date_added|date:'M d, Y H:i'}}
+                </small>
+            </h4>
+        </div>
+        <div class="panel-body">
+            {{ poem|linebreaks }}
+        </div>
+    </div><!--panel -->
+  {% empty %}
+    There are no poems for this author yet.
+  {% endfor %}
+
+{% endblock content %}
+</html>
