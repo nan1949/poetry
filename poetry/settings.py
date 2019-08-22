@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # My apps
     'poems',
     'users',
+    'lists',
 ]
 
 MIDDLEWARE = [
