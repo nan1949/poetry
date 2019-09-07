@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 {% extends 'poems/base.html' %}
-{% load bootstrap3 %}
 
 {% block header %}
   <h3>Log in to your account.</h3>
@@ -10,11 +9,9 @@
 {% block content %}
   <form method="post" action="/users/login/" class="form">
       {% csrf_token %}
-      {% bootstrap_form form %}
+      {{ form.as_p }}
 
-      {% buttons %}
         <button name="submit" class="btn btn-primary">log in</button>
-      {% endbuttons %}
 
       <input type="hidden" name="next" value="/" />
   </form>
