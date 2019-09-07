@@ -24,3 +24,15 @@ class Poem(models.Model):
     def __str__(self):
         """Return a string representation of the model."""
         return self.text[:100] + '...'
+
+
+class Translation(models.Model):
+    poem = models.ForeignKey(Poem, on_delete=models.PROTECT)
+    title = models.CharField(max_length=200)
+    translator = models.CharField(max_length=200)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.text[:100] + '...'

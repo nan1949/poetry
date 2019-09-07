@@ -3,15 +3,29 @@
 {% extends 'poems/base.html' %}
 
 {% block header %}
-  <h4>{{ poem.title }}</h4>
-  <h5><a href="/authors/{{ author.id }}/">{{ author }}</a> {{ poem.date_added|date:'M d, Y H:i'}}</h5>
 {% endblock header %}
 
 {% block content %}
+  <h4>{{ poem.title }}</h4>
+  <h5><a href="/authors/{{ author.id }}/">{{ author }}</a> {{ poem.date_added|date:'M d, Y H:i'}}</h5>
   <p>{{ poem.text|linebreaks }}</p>
   <p>
       <a href="/edit_poem/{{ poem.id }}/">edit poem</a>
   </p>
-
 {% endblock content %}
+
+{% block content-col2 %}
+  {% for translation in translations %}
+    <h4>
+        {{ translation.title }}
+        <small>
+            {{ translation.date_added|date:'M d, Y H:i'}}
+        </small>
+    </h4>
+    <h5>译者：{{ translation.translator }}</h5>
+    {{ translation.text|linebreaks }}
+  {% empty %}
+    暂无译诗。
+  {% endfor %}
+{% endblock content-col2 %}
 </html>

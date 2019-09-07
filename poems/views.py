@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Author, Poem
-from .forms import AuthorForm, PoemForm
+from .models import Author, Poem, Translation
+from .forms import AuthorForm, PoemForm, TranslationForm
 
 
 # Create your views here.
@@ -31,7 +31,8 @@ def poem(request, author_id, poem_id):
     """Show poem"""
     author = Author.objects.get(id=author_id)
     poem = Poem.objects.get(id=poem_id)
-    context = {'author': author, 'poem': poem}
+    translations = poem.translation_set.order_by('-date_added')
+    context = {'author': author, 'poem': poem, 'translations': translations}
     return render(request, 'poems/poem.html', context)
 
 
@@ -72,6 +73,25 @@ def new_poem(request, author_id):
 
     context = {'author': author, 'form': form}
     return render(request, 'poems/new_poem.html', context)
+
+
+@login_required
+def new_translation(request, author_id, poem_id):
+    author = Author.objects.get(id=author_id)
+    poem = Poem.objects.get(id=poem_id)
+    if request.method != 'POST':
+        form = TranslationForm()
+    else:
+        form = TranslationForm(data=request.POST)
+        if form.is_valid():
+            new_translation = form.save(commit=False)
+            new_translation.poem = poem
+            new_translation.owner = request.user
+            new_translation.save()
+        return HttpResponseRedirect(reverse('poem', args=[author_id, poem_id]))
+
+    context = {'author': author, 'poem': poem, 'form': form}
+    return render(request, 'poems/new_translation.html', context)
 
 
 @login_required
