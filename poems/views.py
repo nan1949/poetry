@@ -96,20 +96,34 @@ def new_translation(request, author_id, poem_id):
 
 @login_required
 def edit_poem(request, poem_id):
-    """Edit an existing poem"""
     poem = Poem.objects.get(id=poem_id)
     author = poem.author
     if poem.owner != request.user:
         raise Http404
-
     if request.method != 'POST':
-        # Initial request; pre-fill form with the current poem.
         form = PoemForm(instance=poem)
     else:
         form = PoemForm(instance=poem, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('author', args=[author.id]))
+            return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
 
     context = {'poem': poem, 'author': author, 'form': form}
     return render(request, 'poems/edit_poem.html', context)
+
+@login_required
+def edit_translation(request, translation_id):
+    translation = Translation.objects.get(id=translation_id)
+    poem = translation.poem
+    author = poem.author
+    if translation.owner != request.user:
+        raise Http404
+    if request.method != 'POST':
+        form = TranslationForm(instance=translation)
+    else:
+        form = TranslationForm(instance=translation, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
+    context = {'translation': translation, 'poem': poem, 'author': author, 'form': form}
+    return render(request, 'poems/edit_translation.html', context)

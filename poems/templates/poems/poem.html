@@ -7,7 +7,9 @@
 
 {% block content %}
   <h4>{{ poem.title }}</h4>
-  <h5><a href="/authors/{{ author.id }}/">{{ author }}</a> {{ poem.date_added|date:'M d, Y H:i'}}</h5>
+  <h5>
+      <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
+  </h5>
   <p>{{ poem.text|linebreaks }}</p>
   <p>
       <a href="/edit_poem/{{ poem.id }}/">edit poem</a>
@@ -16,16 +18,13 @@
 
 {% block content-col2 %}
   {% for translation in translations %}
-    <h4>
-        {{ translation.title }}
-        <small>
-            {{ translation.date_added|date:'M d, Y H:i'}}
-        </small>
-    </h4>
+    <h4>{{ translation.title }}</h4>
     <h5>译者：{{ translation.translator }}</h5>
-    {{ translation.text|linebreaks }}
+    <p>{{ translation.text|linebreaks }}</p>
+    <p><a href="/edit_translation/{{ translation.id }}/">编辑译诗</a></p>
   {% empty %}
-    暂无译诗。
+    <p>暂无译诗</p>
   {% endfor %}
+    <p><a href="/new_translation/{{ author.id }}/{{ poem.id }}">新增译诗</a></p>
 {% endblock content-col2 %}
 </html>
