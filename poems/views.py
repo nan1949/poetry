@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Author, Poem, Translation
-from .forms import AuthorForm, PoemForm, TranslationForm
+from .models import Author, Poem, Translation, Question, Answer
+from .forms import AuthorForm, PoemForm, TranslationForm, QuestionForm, AnswerForm
 
 
 # Create your views here.
@@ -28,38 +28,32 @@ def author(request, author_id):
 
 
 def poem(request, author_id, poem_id):
-    """Show poem"""
     author = Author.objects.get(id=author_id)
     poem = Poem.objects.get(id=poem_id)
     translations = poem.translation_set.order_by('-date_added')
-    context = {'author': author, 'poem': poem, 'translations': translations}
+    questions = poem.question_set.order_by('-date_added')
+    context = {'author': author, 'poem': poem, 'translations': translations, 'questions': questions}
     return render(request, 'poems/poem.html', context)
 
 
 @login_required
 def new_author(request):
-    """Add a new author"""
     if request.method != 'POST':
-        # No data submitted; blank form
         form = AuthorForm()
     else:
-        # POST data submitted; process data.
         form = AuthorForm(request.POST)
         if form.is_valid():
             new_author = form.save(commit=False)
             new_author.owner = request.user
             new_author.save()
             return HttpResponseRedirect(reverse('authors'))
-
     context = {'form': form}
     return render(request, 'poems/new_author.html', context)
 
 
 @login_required
 def new_poem(request, author_id):
-    """Add a new poem for a particular author"""
     author = Author.objects.get(id=author_id)
-
     if request.method != 'POST':
         form = PoemForm()
     else:
@@ -70,15 +64,14 @@ def new_poem(request, author_id):
             new_poem.owner = request.user
             new_poem.save()
         return HttpResponseRedirect(reverse('author', args=[author_id]))
-
     context = {'author': author, 'form': form}
     return render(request, 'poems/new_poem.html', context)
 
 
 @login_required
-def new_translation(request, author_id, poem_id):
-    author = Author.objects.get(id=author_id)
+def new_translation(request, poem_id):
     poem = Poem.objects.get(id=poem_id)
+    author = poem.author
     if request.method != 'POST':
         form = TranslationForm()
     else:
@@ -88,11 +81,28 @@ def new_translation(request, author_id, poem_id):
             new_translation.poem = poem
             new_translation.owner = request.user
             new_translation.save()
-        return HttpResponseRedirect(reverse('poem', args=[author_id, poem_id]))
+        return HttpResponseRedirect(reverse('poem', args=[author.id, poem_id]))
 
     context = {'author': author, 'poem': poem, 'form': form}
     return render(request, 'poems/new_translation.html', context)
 
+
+@login_required
+def new_question(request, poem_id):
+    poem = Poem.objects.get(id=poem_id)
+    author = poem.author
+    if request.method != 'POST':
+        form = QuestionForm()
+    else:
+        form = QuestionForm(data=request.POST)
+        if form.is_valid():
+            new_question = form.save(commit=False)
+            new_question.poem = poem
+            new_question.owner = request.user
+            new_question.save()
+        return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
+    context = {'author': author, 'poem': poem, 'form': form}
+    return render(request, 'poems/new_question.html', context)
 
 @login_required
 def edit_poem(request, poem_id):

@@ -18,11 +18,11 @@
       <a href="/authors/{{ author.id }}/{{ poem.id }}/">{{ poem.title }}</a>
   </p>
 
-  <p>Add a new translation</p>
-  <form action="/new_translation/{{ poem.id }}/" method="post">
+  <p>Ask a question</p>
+  <form action="/new_question/{{ poem.id }}/" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button name="'submit" class="btn btn-primary">add translation</button>
+      <button name="'submit" class="btn btn-primary">add question</button>
   </form>
 {% endblock content-col2 %}
 </html>

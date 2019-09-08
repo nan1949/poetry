@@ -34,5 +34,17 @@ class Translation(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
 
-    def __str__(self):
-        return self.text[:100] + '...'
+
+class Question(models.Model):
+    poem = models.ForeignKey(Poem, on_delete=models.PROTECT)
+    question = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.PROTECT)
+    answer = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)
+

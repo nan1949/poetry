@@ -10,10 +10,15 @@
   <h5>
       <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
   </h5>
-  <p>{{ poem.text|linebreaks }}</p>
+  <p><pre>{{ poem.text }}</pre></p>
+
   <p>
       <a href="/edit_poem/{{ poem.id }}/">edit poem</a>
   </p>
+  <p>问题区：<a href="/new_question/{{ poem.id }}">提问</a></p>
+  {% for question in questions %}
+    <h5>{{ forloop.counter }}. {{ question.question }}</h5>
+  {% endfor %}
 {% endblock content %}
 
 {% block content-col2 %}
@@ -25,6 +30,6 @@
   {% empty %}
     <p>暂无译诗</p>
   {% endfor %}
-    <p><a href="/new_translation/{{ author.id }}/{{ poem.id }}">新增译诗</a></p>
+    <p><a href="/new_translation/{{ poem.id }}">新增译诗</a></p>
 {% endblock content-col2 %}
 </html>
