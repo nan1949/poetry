@@ -10,7 +10,7 @@
   <h5>
       <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
   </h5>
-  <p><pre>{{ poem.text }}</pre></p>
+  <pre>{{ poem.text|safe|linenumbers }}</pre>
 
   <p>
       <a href="/edit_poem/{{ poem.id }}/">edit poem</a>
@@ -22,14 +22,29 @@
 {% endblock content %}
 
 {% block content-col2 %}
-  {% for translation in translations %}
-    <h4>{{ translation.title }}</h4>
-    <h5>译者：{{ translation.translator }}</h5>
-    <p>{{ translation.text|linebreaks }}</p>
-    <p><a href="/edit_translation/{{ translation.id }}/">编辑译诗</a></p>
-  {% empty %}
-    <p>暂无译诗</p>
-  {% endfor %}
-    <p><a href="/new_translation/{{ poem.id }}">新增译诗</a></p>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    {% for translation in translations %}
+      <li class="nav-item">
+        <a class="nav-link {% if forloop.counter == tabnum %}active{% endif %}"
+           id="tab-{{ forloop.counter }}" data-toggle="tab"
+           href="/authors/{{ author.id }}/{{ poem.id }}/{{ forloop.counter }}" role="tab"
+           aria-controls="{{ forloop.counter }}" aria-selected="true">
+          {{ translation.translator }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    {% for translation in translations %}
+    <div class="tab-pane {% if forloop.counter == tabnum %}active{% endif %}"
+         id="{{ forloop.counter }}" role="tabpanel"
+         aria-labelledby="tab-{{ forloop.counter }}">
+      <h4>{{ translation.title }}</h4>
+      {{ translation.text|linebreaks }}
+      <p><a href="/edit_translation/{{ translation.id }}/">编辑译诗</a></p>
+    </div>
+    {% endfor %}
+  </div>
+  <p><a href="/new_translation/{{ poem.id }}">新增译诗</a></p>
 {% endblock content-col2 %}
 </html>

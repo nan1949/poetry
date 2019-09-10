@@ -9,6 +9,7 @@ urlpatterns = [
     path('authors/', views.authors, name='authors'),
     path('authors/<int:author_id>/', views.author, name='author'),
     path('authors/<int:author_id>/<int:poem_id>/', views.poem, name='poem'),
+    path('authors/<int:author_id>/<int:poem_id>/<int:tabnum>/', views.poem, name='poem'),
     path('new_author/', views.new_author, name='new_author'),
     path('new_poem/<int:author_id>/', views.new_poem, name='new_poem'),
     path('new_translation/<int:poem_id>/', views.new_translation, name='new_translation'),

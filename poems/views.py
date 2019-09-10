@@ -27,12 +27,13 @@ def author(request, author_id):
     return render(request, 'poems/author.html', context)
 
 
-def poem(request, author_id, poem_id):
+def poem(request, author_id, poem_id, tabnum=1):
     author = Author.objects.get(id=author_id)
     poem = Poem.objects.get(id=poem_id)
     translations = poem.translation_set.order_by('-date_added')
     questions = poem.question_set.order_by('-date_added')
-    context = {'author': author, 'poem': poem, 'translations': translations, 'questions': questions}
+    context = {'author': author, 'poem': poem, 'translations': translations,
+               'questions': questions, 'tabnum': tabnum}
     return render(request, 'poems/poem.html', context)
 
 
