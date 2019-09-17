@@ -37,6 +37,12 @@ def poem(request, author_id, poem_id, tabnum=1):
     return render(request, 'poems/poem.html', context)
 
 
+def questions(request):
+    questions = Question.objects.all()
+    context = {'questions': questions}
+    return render(request, 'poems/questions.html', context)
+
+
 @login_required
 def new_author(request):
     if request.method != 'POST':
@@ -104,6 +110,26 @@ def new_question(request, poem_id):
         return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
     context = {'author': author, 'poem': poem, 'form': form}
     return render(request, 'poems/new_question.html', context)
+
+
+@login_required
+def new_answer(request, question_id):
+    question = Question.objects.get(id=question_id)
+    poem = question.poem
+    author = poem.author
+    if request.method != 'POST':
+        form = AnswerForm()
+    else:
+        form = AnswerForm(data=request.POST)
+        if form.is_valid():
+            new_answer = form.save(commit=False)
+            new_answer.question = question
+            new_answer.owner = request.user
+            new_answer.save()
+        return HttpResponseRedirect(reverse('poem', args=[poem.author.id, poem.id]))
+    context = {'author': author, 'poem': poem, 'question': question, 'form': form}
+    return render(request, 'poems/new_answer.html', context)
+
 
 @login_required
 def edit_poem(request, poem_id):

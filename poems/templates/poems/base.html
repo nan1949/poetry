@@ -5,10 +5,8 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <title>诗的学习地</title>
+      <title>英文诗歌网</title>
       <link href="/static/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
-      <link href="/static/bootstrap-4.3.1-dist/css/bootstrap-grid.css" rel="stylesheet">
-      <link href="/static/bootstrap-4.3.1-dist/css/bootstrap-reboot.css" rel="stylesheet">
       <link href="/static/base.css" rel="stylesheet">
 
   </head>
@@ -19,6 +17,12 @@
         <ul class="navbar-nav flex-row">
             <li class="nav-item">
                 <a class="nav-link" href="/authors/">诗人</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">评论</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/questions/">问题</a>
             </li>
         </ul>
       </div>
@@ -34,14 +38,14 @@
     </nav>
 
     <main id="content" role="main">
-      <div class="page-header">
+      <div class="page-header px-5">
           {% block header %}{% endblock header %}
       </div>
       <div class="row">
-        <div class="col p-3 p-md-5">
+        <div class="col px-5">
           {% block content %}{% endblock content %}
         </div>
-        <div class="col">
+        <div class="col px-5">
           {% block content-col2 %}{% endblock content-col2 %}
         </div>
       </div>
@@ -53,7 +57,6 @@
         <p>联系方式（微信）：18042006517</p>
       </div>
     </footer>
-    <script src="/static/bootstrap-4.3.1-dist/js/bootstrap.bundle.js"></script>
     <script src="/static/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
   </body>
 </html>

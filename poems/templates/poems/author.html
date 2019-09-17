@@ -3,7 +3,7 @@
 {% extends 'poems/base.html' %}
 
 {% block header %}
-  <h3>{{ author }}</h3>
+  <h4>{{ author }}</h4>
 {% endblock header %}
 
 {% block content %}
@@ -14,12 +14,12 @@
   {% for poem in poems %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4>
+            <h5>
                 <a href="/authors/{{ author.id }}/{{ poem.id }}/">{{ poem.title }}</a>
                 <small>
                     {{ poem.date_added|date:'M d, Y H:i'}}
                 </small>
-            </h4>
+            </h5>
         </div>
         <div class="panel-body">
             {{ poem|linebreaks }}

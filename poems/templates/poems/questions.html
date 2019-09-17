@@ -1,0 +1,17 @@
+{% extends 'poems/base.html' %}
+
+{% block content %}
+      {% for question in questions %}
+        <div class="border-bottom border-primary">
+            <div class="row">
+              <div class="col">
+                <a href="/authors/{{ question.poem.author.id }}/{{ question.poem.id }}/">{{ question.poem.title }}</a>:
+              </div>
+              <div class="col text-right">{{ question.poem.author }}</div>
+            </div>
+            <p>{{ question.question }}</p>
+        </div>
+      {% empty %}
+        <div>No questions have been asked yet.</div>
+      {% endfor %}
+{% endblock content %}

@@ -10,14 +10,19 @@
   <h5>
       <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
   </h5>
-  <pre>{{ poem.text|safe|linenumbers }}</pre>
+  <p>{{ poem.text|linebreaks }}</p>
 
   <p>
       <a href="/edit_poem/{{ poem.id }}/">edit poem</a>
   </p>
   <p>问题区：<a href="/new_question/{{ poem.id }}">提问</a></p>
   {% for question in questions %}
-    <h5>{{ forloop.counter }}. {{ question.question }}</h5>
+    <div class="border-bottom border-primary">
+      <h5>{{ forloop.counter }}. {{ question.question }}</h5>
+      {% for answer in question.answer_set.all %}
+        <p>{{ answer.answer }}</p>
+      {% endfor %}
+    </div>
   {% endfor %}
 {% endblock content %}
 

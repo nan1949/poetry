@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
 {% extends 'poems/base.html' %}
 
 {% block header %}
-  <h3>Authors</h3>
 {% endblock header %}
 
 {% block content %}
   <ul>
       {% for author in authors %}
         <li>
-            <h4>
+            <h5>
                 <a href="/authors/{{ author.id }}/">{{ author }}</a>
-            </h4>
+            </h5>
         </li>
       {% empty %}
         <li>No authors have been added yet.</li>
       {% endfor %}
   </ul>
 
-  <h4><a href="/new_author/">Add a new author:</a></h4>
+  <p><a href="/new_author/">Add a new author:</a></p>
 {% endblock content %}
-</html>

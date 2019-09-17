@@ -1,0 +1,24 @@
+{% extends 'poems/base.html' %}
+
+{% block content %}
+  <h4>{{ poem.title }}</h4>
+  <h5>
+      <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
+  </h5>
+  <p>{{ poem.text|linebreaks }}</p>
+{% endblock content %}
+
+{%  block content-col2 %}
+  <p>
+      <a href="/authors/{{ author.id }}/">{{ author }}</a>
+  </p>
+  <p>
+      <a href="/authors/{{ author.id }}/{{ poem.id }}/">{{ poem.title }}</a>
+  </p>
+  <p>问题：{{ question.question }}</p>
+  <form action="/new_answer/{{ question.id }}/" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="'submit" class="btn btn-primary">提交答案</button>
+  </form>
+{% endblock content-col2 %}
