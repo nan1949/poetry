@@ -1,14 +1,14 @@
 {% extends 'poems/base.html' %}
 
-{% block content %}
+{% block content-left %}
   <h4>{{ poem.title }}</h4>
   <h5>
       <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
   </h5>
   <p>{{ poem.text|linebreaks }}</p>
-{% endblock content %}
+{% endblock content-left %}
 
-{%  block content-col2 %}
+{%  block content-right %}
   <p>
       <a href="/authors/{{ author.id }}/">{{ author }}</a>
   </p>
@@ -21,4 +21,4 @@
       {{ form.as_p }}
       <button name="'submit" class="btn btn-primary">提交答案</button>
   </form>
-{% endblock content-col2 %}
+{% endblock content-right %}

@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
 {% extends 'poems/base.html' %}
 
-{%  block content %}
+{%  block content-left %}
   <p>
       <a href="/authors/{{ author.id }}/">{{ author }}</a>
   </p>
-
   <p>Add a new poem</p>
   <form action="/new_poem/{{ author.id }}/" method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <button name="'submit" class="btn-primary">add poem</button>
   </form>
-{% endblock content %}
-</html>
+{% endblock content-left %}

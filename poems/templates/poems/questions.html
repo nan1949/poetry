@@ -1,6 +1,6 @@
 {% extends 'poems/base.html' %}
 
-{% block content %}
+{% block content-left %}
       {% for question in questions %}
         <div class="border-bottom border-primary">
             <div class="row">
@@ -14,4 +14,4 @@
       {% empty %}
         <div>No questions have been asked yet.</div>
       {% endfor %}
-{% endblock content %}
+{% endblock content-left %}

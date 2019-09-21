@@ -1,9 +1,6 @@
 {% extends 'poems/base.html' %}
 
-{% block header %}
-{% endblock header %}
-
-{% block content %}
+{% block content-left %}
   <ul>
       {% for author in authors %}
         <li>
@@ -17,4 +14,4 @@
   </ul>
 
   <p><a href="/new_author/">Add a new author:</a></p>
-{% endblock content %}
+{% endblock content-left %}

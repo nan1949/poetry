@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
 {% extends 'poems/base.html' %}
 
 {% block header %}
 {% endblock header %}
 
-{% block content %}
+{% block content-left %}
   <h4>{{ poem.title }}</h4>
   <h5>
       <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
   </h5>
   <p>{{ poem.text|linebreaks }}</p>
-
   <p>
       <a href="/edit_poem/{{ poem.id }}/">edit poem</a>
   </p>
@@ -24,9 +21,17 @@
       {% endfor %}
     </div>
   {% endfor %}
-{% endblock content %}
+{% endblock content-left %}
 
-{% block content-col2 %}
+{% block content-right %}
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a class="nav-link" href="">查词</a></li>
+    <li class="nav-item"><a class="nav-link active" href="#">译文</a></li>
+    <li class="nav-item"><a class="nav-link" href="">问·答</a></li>
+    <li class="nav-item"><a class="nav-link" href="">批评</a></li>
+    <li class="nav-item"><a class="nav-link" href="">分解</a></li>
+    <li class="nav-item"><a class="nav-link" href="">空白</a></li>
+  </ul>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     {% for translation in translations %}
       <li class="nav-item">
@@ -51,5 +56,4 @@
     {% endfor %}
   </div>
   <p><a href="/new_translation/{{ poem.id }}">新增译诗</a></p>
-{% endblock content-col2 %}
-</html>
+{% endblock content-right %}
