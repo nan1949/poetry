@@ -1,0 +1,15 @@
+{% extends 'poems/base.html' %}
+
+{% block content-left %}
+      {% for translation in translations %}
+        <div class="border-bottom border-primary">
+            <div class="row">
+              <div class="col">
+                <a href="/poems/{{ translation.poem.id }}/">{{ translation.poem.title }}</a>:
+              </div>
+              <div class="col text-right">{{ translation.poem.author }}</div>
+            </div>
+            <p>{{ translation }}</p>
+        </div>
+      {% endfor %}
+{% endblock content-left %}

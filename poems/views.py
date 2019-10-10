@@ -27,14 +27,39 @@ def author(request, author_id):
     return render(request, 'poems/author.html', context)
 
 
-def poem(request, author_id, poem_id, tabnum=1):
-    author = Author.objects.get(id=author_id)
+def poem(request, poem_id):
     poem = Poem.objects.get(id=poem_id)
+    author = poem.author
+    translations = poem.translation_set.order_by('-date_added')
+    questions = poem.question_set.order_by('-date_added')
+    context = {'author': author, 'poem': poem, 'translations': translations,
+               'questions': questions}
+    return render(request, 'poems/poem.html', context)
+
+
+def translations(request):
+    translations = Translation.objects.all()
+    context = {'translations': translations}
+    return render(request, 'poems/translations.html', context)
+
+
+def poem_translation(request, poem_id, tabnum=1):
+    poem = Poem.objects.get(id=poem_id)
+    author = poem.author
     translations = poem.translation_set.order_by('-date_added')
     questions = poem.question_set.order_by('-date_added')
     context = {'author': author, 'poem': poem, 'translations': translations,
                'questions': questions, 'tabnum': tabnum}
-    return render(request, 'poems/poem.html', context)
+    return render(request, 'poems/poem_translation.html', context)
+
+
+def poem_questions(request, poem_id):
+    poem = Poem.objects.get(id=poem_id)
+    author = poem.author
+    questions = poem.question_set.order_by('-date_added')
+    context = {'author': author, 'poem': poem,
+               'questions': questions}
+    return render(request, 'poems/poem_questions.html', context)
 
 
 def questions(request):

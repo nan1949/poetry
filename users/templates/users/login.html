@@ -6,7 +6,7 @@
   <h3>Log in to your account.</h3>
 {% endblock header %}
 
-{% block content %}
+{% block content-left %}
   <form method="post" action="/users/login/" class="form">
       {% csrf_token %}
       {{ form.as_p }}
@@ -15,5 +15,5 @@
 
       <input type="hidden" name="next" value="/" />
   </form>
-{% endblock content %}
+{% endblock content-left %}
 </html>

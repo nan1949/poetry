@@ -1,0 +1,30 @@
+{% extends 'poems/base_poem.html' %}
+
+{% block poem-translation %}active{% endblock poem-translation %}
+{% block content-r-son %}
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    {% for translation in translations %}
+      <li class="nav-item">
+        <a class="nav-link {% if forloop.counter == tabnum %}active{% endif %}"
+           id="tab-{{ forloop.counter }}" data-toggle="tab"
+           href="/poems/{{ poem.id }}/{{ forloop.counter }}" role="tab"
+           aria-controls="{{ forloop.counter }}" aria-selected="true">
+          {{ translation.translator }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    {% for translation in translations %}
+      <div class="tab-pane {% if forloop.counter == tabnum %}active{% endif %}"
+         id="{{ forloop.counter }}" role="tabpanel"
+         aria-labelledby="tab-{{ forloop.counter }}">
+      <h4>{{ translation.title }}</h4>
+      {{ translation.text|linebreaks }}
+      <p><a href="/edit_translation/{{ translation.id }}/">编辑译诗</a></p>
+    </div>
+    {% endfor %}
+  </div>
+  <p><a href="/new_translation/{{ poem.id }}">新增译诗</a></p>
+{% endblock content-r-son %}

@@ -1,0 +1,15 @@
+{% extends 'poems/base_poem.html' %}
+{% block poem-question %}active{% endblock poem-question %}
+{% block content-r-son %}
+  <div class="row"><a href="/new_question/{{ poem.id }}">提问</a></div>
+  {% for question in questions %}
+  <div class="row border-bottom border-primary">
+    <div class="row">
+      <h5>{{ forloop.counter }}. {{ question.question }}</h5>
+    </div>
+    {% for answer in question.answer_set.all %}
+      <div class="row pl-3">{{ answer.answer }}</div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+{% endblock content-r-son %}
