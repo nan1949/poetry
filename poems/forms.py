@@ -1,14 +1,31 @@
 from django import forms
 from .models import Author, Poem, Translation, Question, Answer
 
+LANGUAGES = (
+    (1, '英语'),
+    (2, '法语'),
+    (3, '日语'),
+    (4, '西班牙语'),
+    (5, '德语'),
+    (6, '俄语'),
+)
+
 
 class AuthorForm(forms.ModelForm):
     class Meta:
         model = Author
-        fields = ['name_en', 'name_zh']
+        fields = ['name_en', 'name_zh', 'language', 'born', 'died', 'detail']
         widgets = {
-            'name_en': forms.TextInput(attrs={'placeholder': '诗人原名'}),
-            'name_zh': forms.TextInput(attrs={'placeholder': '诗人中文名'})
+            'name_en': forms.TextInput(attrs={'placeholder': '原名',
+                                              'class': 'form-control'}),
+            'name_zh': forms.TextInput(attrs={'placeholder': '中文名',
+                                              'class': 'form-control'}),
+            'language': forms.Select(attrs={'class': 'form-control'},
+                                     choices=LANGUAGES),
+            'born': forms.DateInput(attrs={'placeholder': 'yyyy-mm-dd',
+                'class': 'form-control'}),
+            'died': forms.DateInput(attrs={'class': 'form-control'}),
+            'detail': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
 

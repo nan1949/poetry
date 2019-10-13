@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 class Author(models.Model):
     """The author of poems"""
     name_en = models.CharField(max_length=100)
-    name_zh = models.CharField(max_length=100)
+    name_zh = models.CharField(max_length=100, blank=True, null=True)
+    language = models.CharField(max_length=50, blank=True, null=True)
+    born = models.DateField(null=True)
+    died = models.DateField(null=True)
+    detail = models.TextField(blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
 
@@ -36,7 +40,6 @@ class Translation(models.Model):
 
     def __str__(self):
         return self.text[:100] + '...'
-
 
 
 class Question(models.Model):

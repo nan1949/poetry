@@ -10,9 +10,14 @@
 
   <form action="/new_author/" method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
-
+      {% for field in form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field }}
+      </div>
+      {% endfor %}
       <button name="submit" class="btn btn-primary">add author</button>
   </form>
+
 {% endblock content-left %}
 </html>
