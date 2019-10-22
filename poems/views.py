@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Author, Poem, Translation, Question, Answer
-from .forms import AuthorForm, PoemForm, TranslationForm, QuestionForm, AnswerForm
+from .models import Author, Poem, Translation, Question, Answer, Critic
+from .forms import AuthorForm, PoemForm, TranslationForm, QuestionForm, AnswerForm, CriticForm
 
 
 # Create your views here.
@@ -43,29 +43,61 @@ def translations(request):
     return render(request, 'poems/translations.html', context)
 
 
-def poem_translation(request, poem_id, tabnum=1):
+def poem_translation(request, poem_id, translation_id):
     poem = Poem.objects.get(id=poem_id)
     author = poem.author
     translations = poem.translation_set.order_by('-date_added')
+    translation = Translation.objects.get(id=translation_id)
     questions = poem.question_set.order_by('-date_added')
     context = {'author': author, 'poem': poem, 'translations': translations,
-               'questions': questions, 'tabnum': tabnum}
+               'questions': questions, 'translation': translation}
     return render(request, 'poems/poem_translation.html', context)
 
 
 def poem_questions(request, poem_id):
     poem = Poem.objects.get(id=poem_id)
+    translations = poem.translation_set
     author = poem.author
     questions = poem.question_set.order_by('-date_added')
     context = {'author': author, 'poem': poem,
-               'questions': questions}
+               'questions': questions, 'translations': translations}
     return render(request, 'poems/poem_questions.html', context)
+
+
+def poem_question(request, poem_id, question_id):
+    poem = Poem.objects.get(id=poem_id)
+    translations = poem.translation_set
+    author = poem.author
+    question = Question.objects.get(id=question_id)
+    context = {'author': author, 'poem': poem,
+               'question': question, 'translations': translations}
+    return render(request, 'poems/poem_question.html', context)
 
 
 def questions(request):
     questions = Question.objects.all()
     context = {'questions': questions}
     return render(request, 'poems/questions.html', context)
+
+
+def poem_critics(request, poem_id):
+    poem = Poem.objects.get(id=poem_id)
+    translations = poem.translation_set
+    author = poem.author
+    critics = poem.critic_set.order_by('-date_added')
+    context = {'author': author, 'poem': poem,
+               'critics': critics, 'translations': translations}
+    return render(request, 'poems/poem_critics.html', context)
+
+
+def poem_critic(request, poem_id, critic_id):
+    poem = Poem.objects.get(id=poem_id)
+    translations = poem.translation_set
+    author = poem.author
+    critic = Critic.objects.get(id=critic_id)
+    context = {'author': author, 'poem': poem,
+               'critic': critic, 'translations': translations}
+    return render(request, 'poems/poem_critic.html', context)
 
 
 @login_required
@@ -132,7 +164,7 @@ def new_question(request, poem_id):
             new_question.poem = poem
             new_question.owner = request.user
             new_question.save()
-        return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
+        return HttpResponseRedirect(reverse('poem', args=[poem.id]))
     context = {'author': author, 'poem': poem, 'form': form}
     return render(request, 'poems/new_question.html', context)
 
@@ -151,7 +183,7 @@ def new_answer(request, question_id):
             new_answer.question = question
             new_answer.owner = request.user
             new_answer.save()
-        return HttpResponseRedirect(reverse('poem', args=[poem.author.id, poem.id]))
+        return HttpResponseRedirect(reverse('poem_answers', args=[poem.id, question.id]))
     context = {'author': author, 'poem': poem, 'question': question, 'form': form}
     return render(request, 'poems/new_answer.html', context)
 
@@ -168,7 +200,7 @@ def edit_poem(request, poem_id):
         form = PoemForm(instance=poem, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
+            return HttpResponseRedirect(reverse('poem', args=[poem.id]))
 
     context = {'poem': poem, 'author': author, 'form': form}
     return render(request, 'poems/edit_poem.html', context)
@@ -186,6 +218,22 @@ def edit_translation(request, translation_id):
         form = TranslationForm(instance=translation, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('poem', args=[author.id, poem.id]))
+            return HttpResponseRedirect(reverse('poem', args=[poem.id]))
     context = {'translation': translation, 'poem': poem, 'author': author, 'form': form}
     return render(request, 'poems/edit_translation.html', context)
+
+
+@login_required
+def edit_author(request, author_id):
+    author = Author.objects.get(id=author_id)
+    if author.owner != request.user:
+        raise Http404
+    if request.method != 'POST':
+        form = AuthorForm(instance=author)
+    else:
+        form = AuthorForm(instance=author, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('author', args=[author_id]))
+    context = {'author': author, 'form': form}
+    return render(request, 'poems/edit_author.html', context)

@@ -15,9 +15,11 @@ urlpatterns = [
 
     # 诗歌页面tabs
     path('poems/<int:poem_id>/', views.poem, name='poem'),  # 空白
-    path('poems/<int:poem_id>/<int:tabnum>/', views.poem_translation, name='poem_translation'),  # 译文
-    path('poems/<int:poem_id>/questions/', views.poem_questions, name='poem_questions'),  # 问答
-    # path('poems/<int:poem_id>/<int:tabnum>/', views.poem, name='poem'),  # 批评
+    path('poems/<int:poem_id>/translations/<int:translation_id>/', views.poem_translation, name='poem_translation'),  # 译文
+    path('poems/<int:poem_id>/questions/', views.poem_questions, name='poem_questions'),  # 问
+    path('poems/<int:poem_id>/questions/<int:question_id>/', views.poem_question, name='poem_question'),  # 答案详情页
+    path('poems/<int:poem_id>/critics/', views.poem_critics, name='poem_critics'),  # 批评
+    path('poems/<int:poem_id>/critics/<int:critic_id>/', views.poem_critic, name='poem_critic'),  # 批评
     # path('poems/<int:poem_id>/<int:tabnum>/', views.poem, name='poem'),  # 分解
     # path('poems/<int:poem_id>/<int:tabnum>/', views.poem, name='poem'),  # 查词
 
@@ -29,6 +31,7 @@ urlpatterns = [
     path('new_answer/<int:question_id>/', views.new_answer, name='new_answer'),
 
     # 修改
+    path('edit_author/<int:author_id>/', views.edit_author, name='edit_author'),
     path('edit_poem/<int:poem_id>/', views.edit_poem, name='edit_poem'),
     path('edit_translation/<int:translation_id>/', views.edit_translation, name='edit_translation'),
 ]

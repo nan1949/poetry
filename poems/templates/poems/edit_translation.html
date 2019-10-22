@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 {% extends 'poems/base.html' %}
 
-{% block content-left %}
-  <h4>{{ poem.title }}</h4>
+{% block content %}
+<div class="col-md-6">
+  <h4><strong>{{ poem.title }}</strong></h4>
   <h5>
       <a href="/authors/{{ author.id }}/">{{ author.name_en }}</a>
   </h5>
   <p>{{ poem.text|linebreaks }}</p>
-{% endblock content-left %}
-
-{% block content-right %}
-  <p>编辑译诗：</p>
+</div>
+<div class="col-md-6">
+  <p>edit translation</p>
   <form action="/edit_translation/{{ translation.id }}/"  method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <button name="submit" class="btn-primary">save changes</button>
   </form>
-{% endblock content-right %}
-</html>
+</div>
+{% endblock content %}

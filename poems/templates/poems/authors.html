@@ -1,17 +1,21 @@
 {% extends 'poems/base.html' %}
 
-{% block content-left %}
-  <ul>
-      {% for author in authors %}
-        <li>
-            <h5>
-                <a href="/authors/{{ author.id }}/">{{ author }}</a>
-            </h5>
-        </li>
-      {% empty %}
-        <li>No authors have been added yet.</li>
-      {% endfor %}
-  </ul>
-
+{% block content %}
+<div class="col-md-6">
+  {% for author in authors %}
+    <div class="col border border-primary mt-3">
+        <p>
+            <a href="/authors/{{ author.id }}/"><strong>{{ author }}</strong></a>
+        </p>
+        <p>{{ author.born }} - {{ author.died }}</p>
+        <p>{{ author.detail|slice:":150" }}...</p>
+    </div>
+  {% endfor %}
   <p><a href="/new_author/">Add a new author:</a></p>
-{% endblock content-left %}
+</div>
+<div class="col-md-6">
+
+</div>
+
+
+{% endblock content %}

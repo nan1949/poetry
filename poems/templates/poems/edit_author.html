@@ -1,12 +1,12 @@
 {% extends 'poems/base.html' %}
 
 {% block header %}
-  <h3>Add a new author:</h3>
+  <h5>Edit author information:</h5>
 {% endblock header %}
 
 {% block content %}
-
-  <form action="/new_author/" method="post" class="form">
+<div class="col-md-6">
+  <form action="/edit_author/{{ author.id }}/" method="post">
       {% csrf_token %}
       {% for field in form %}
       <div class="form-group">
@@ -14,7 +14,10 @@
         {{ field }}
       </div>
       {% endfor %}
-      <button name="submit" class="btn btn-primary">add author</button>
+      <button name="submit" class="btn btn-primary">save changes</button>
   </form>
+</div>
+
+
 
 {% endblock content %}

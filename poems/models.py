@@ -3,18 +3,17 @@ from django.contrib.auth.models import User
 
 
 class Author(models.Model):
-    """The author of poems"""
     name_en = models.CharField(max_length=100)
     name_zh = models.CharField(max_length=100, blank=True, null=True)
     language = models.CharField(max_length=50, blank=True, null=True)
     born = models.DateField(null=True)
     died = models.DateField(null=True)
     detail = models.TextField(blank=True, null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        """Return a string representation of the model"""
         return self.name_en + ', ' + self.name_zh
 
 
@@ -23,11 +22,8 @@ class Poem(models.Model):
     author = models.ForeignKey(Author, on_delete=models.PROTECT)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
-
-    def __str__(self):
-        """Return a string representation of the model."""
-        return self.text[:100] + '...'
 
 
 class Translation(models.Model):
@@ -36,16 +32,18 @@ class Translation(models.Model):
     translator = models.CharField(max_length=200)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.text[:100] + '...'
 
 
 class Question(models.Model):
+    category = models.CharField(max_length=200)  # 翻译、问答、批评、分解放在同一个model中
     poem = models.ForeignKey(Poem, on_delete=models.PROTECT)
-    question = models.TextField()
+    title = models.TextField()
+    text = models.TextField()
+    author = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
@@ -55,3 +53,10 @@ class Answer(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.PROTECT)
 
+
+class Critic(models.Model):
+    poem = models.ForeignKey(Poem, on_delete=models.PROTECT)
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)

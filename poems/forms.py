@@ -1,5 +1,5 @@
 from django import forms
-from .models import Author, Poem, Translation, Question, Answer
+from .models import Author, Poem, Translation, Question, Answer, Critic
 
 LANGUAGES = (
     (1, '英语'),
@@ -34,8 +34,8 @@ class PoemForm(forms.ModelForm):
         model = Poem
         fields = ['title', 'text']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': '原诗标题', }),
-            'text': forms.Textarea(attrs={'cols': 80, 'placeholder': '原诗内容', }),
+            'title': forms.TextInput(attrs={'placeholder': '原诗标题', 'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'cols': 80, 'placeholder': '原诗内容', 'class': 'form-control'}),
         }
 
 
@@ -44,9 +44,9 @@ class TranslationForm(forms.ModelForm):
         model = Translation
         fields = ['title', 'translator', 'text']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': '译诗标题', }),
-            'translator': forms.TextInput(attrs={'placeholder': '译者名字'}),
-            'text': forms.Textarea(attrs={'cols': 80, 'placeholder': '译诗内容', })
+            'title': forms.TextInput(attrs={'placeholder': '译诗标题', 'class': 'form-control'}),
+            'translator': forms.TextInput(attrs={'placeholder': '译者名字', 'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'cols': 80, 'placeholder': '译诗内容', 'class': 'form-control'})
         }
 
 
@@ -55,7 +55,7 @@ class QuestionForm(forms.ModelForm):
         model = Question
         fields = ['question']
         widgets = {
-            'question': forms.Textarea(attrs={'cols': 80, 'placeholder': '问题'}),
+            'question': forms.Textarea(attrs={'cols': 80, 'placeholder': '问题', 'class': 'form-control'}),
         }
 
 
@@ -64,5 +64,15 @@ class AnswerForm(forms.ModelForm):
         model = Answer
         fields = ['answer']
         widgets = {
-            'answer': forms.Textarea(attrs={'cols': 80, 'placeholder': '回答'}),
+            'answer': forms.Textarea(attrs={'cols': 80, 'placeholder': '回答', 'class': 'form-control'}),
+        }
+
+
+class CriticForm(forms.ModelForm):
+    class Meta:
+        model = Critic
+        fields = ['title', 'text']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'class': 'form-control'}),
         }

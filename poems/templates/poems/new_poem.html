@@ -1,13 +1,21 @@
 {% extends 'poems/base.html' %}
 
-{%  block content-left %}
-  <p>
-      <a href="/authors/{{ author.id }}/">{{ author }}</a>
-  </p>
+{%  block content %}
+<div class="col-md-6">
+  <h4>
+    <a href="/authors/{{ author.id }}/"><strong>{{ author }}</strong></a>
+  </h4>
   <p>Add a new poem</p>
   <form action="/new_poem/{{ author.id }}/" method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {% for field in form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field }}
+      </div>
+      {% endfor %}
       <button name="'submit" class="btn-primary">add poem</button>
   </form>
-{% endblock content-left %}
+</div>
+
+{% endblock content %}
