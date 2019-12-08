@@ -30,7 +30,7 @@
 </div>
 <div class="col-md-6">
   <div class="d-flex align-items-end">
-    <h4><strong>{{ author }}</strong> </h4>
+    <h4><strong>{{ author.name }}, {{ author.name_zh }}</strong> </h4>
     <div><a href="/edit_author/{{ author.id }}">edit</a></div>
   </div>
   <p class="text-muted">{{ author.born|date:'F d, Y' }} - {{ author.died|date:'F d, Y' }}</p>

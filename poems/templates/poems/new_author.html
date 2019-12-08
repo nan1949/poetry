@@ -5,8 +5,8 @@
 {% endblock header %}
 
 {% block content %}
-
-  <form action="/new_author/" method="post" class="form">
+<div class="col-md-6">
+    <form action="/new_author/" method="post" class="form">
       {% csrf_token %}
       {% for field in form %}
       <div class="form-group">
@@ -16,5 +16,7 @@
       {% endfor %}
       <button name="submit" class="btn btn-primary">add author</button>
   </form>
+</div>
+
 
 {% endblock content %}

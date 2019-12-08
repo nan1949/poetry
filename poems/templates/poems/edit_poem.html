@@ -1,11 +1,12 @@
 {% extends 'poems/base.html' %}
-
+{% block header %}
+  <h3>Edit poem:</h3>
+{% endblock header %}
 {% block content %}
 <div class="col-md-6">
      <p>
-      <a href="/authors/{{ author.id }}/">{{ author }}</a>
+      <a href="/authors/{{ author.id }}/">{{ author.name }}</a>
   </p>
-  <p>Edit poem:</p>
 
   <form action="/edit_poem/{{ poem.id }}/"  method="post">
       {% csrf_token %}

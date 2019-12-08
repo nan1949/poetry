@@ -2,16 +2,17 @@
 
 {% block content %}
 <div class="col-md-6">
+  <p><a href="/new_author/">Add a new author</a></p>
   {% for author in authors %}
     <div class="col border border-primary mt-3">
         <p>
-            <a href="/authors/{{ author.id }}/"><strong>{{ author }}</strong></a>
+            <a href="/authors/{{ author.id }}/"><strong>{{ author.name }}</strong></a>
         </p>
-        <p>{{ author.born }} - {{ author.died }}</p>
+        <p class="text-muted">{{ author.born|date:'F d, Y' }} - {{ author.died|date:'F d, Y' }}</p>
         <p>{{ author.detail|slice:":150" }}...</p>
     </div>
   {% endfor %}
-  <p><a href="/new_author/">Add a new author:</a></p>
+
 </div>
 <div class="col-md-6">
 

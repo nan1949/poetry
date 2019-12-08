@@ -15,6 +15,7 @@ urlpatterns = [
 
     # 诗歌页面tabs
     path('poems/<int:poem_id>/', views.poem, name='poem'),  # 空白
+    path('poems/<int:poem_id>/translations/', views.poem_translations, name='poem_translations'),
     path('poems/<int:poem_id>/translations/<int:translation_id>/', views.poem_translation, name='poem_translation'),  # 译文
     path('poems/<int:poem_id>/questions/', views.poem_questions, name='poem_questions'),  # 问
     path('poems/<int:poem_id>/questions/<int:question_id>/', views.poem_question, name='poem_question'),  # 答案详情页

@@ -1,5 +1,7 @@
 {% extends 'poems/base.html' %}
-
+{% block header %}
+  <h3>Give an answer</h3>
+{% endblock header %}
 {% block content %}
 <div class="col-md-6">
  <h4><strong><a href="/poems/{{ poem.id }}">{{ poem.title }}</a></strong></h4>
@@ -9,8 +11,8 @@
   <p>{{ poem.text|linebreaks }}</p>
 </div>
 <div class="col-md-6">
-  <p>Question:</p>
-  <p>{{ question.question }}</p>
+  <p>{{ question.title }}</p>
+  <p>{{ question.text }}</p>
   <form action="/new_answer/{{ question.id }}/" method="post">
       {% csrf_token %}
       {{ form.as_p }}
