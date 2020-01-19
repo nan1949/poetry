@@ -9,18 +9,23 @@ urlpatterns = [
 
     # 导航栏页面tabs
     path('authors/', views.authors, name='authors'),
-    path('authors/<int:author_id>/', views.author, name='author'),
     path('questions/', views.questions, name='questions'),
     path('translations/', views.translations, name='translations'),
 
+    path('author/<int:author_id>/', views.author, name='author'),
+
     # 诗歌页面tabs
-    path('poems/<int:poem_id>/', views.poem, name='poem'),  # 空白
-    path('poems/<int:poem_id>/translations/', views.poem_translations, name='poem_translations'),
-    path('poems/<int:poem_id>/translations/<int:translation_id>/', views.poem_translation, name='poem_translation'),  # 译文
-    path('poems/<int:poem_id>/questions/', views.poem_questions, name='poem_questions'),  # 问
-    path('poems/<int:poem_id>/questions/<int:question_id>/', views.poem_question, name='poem_question'),  # 答案详情页
-    path('poems/<int:poem_id>/critics/', views.poem_critics, name='poem_critics'),  # 批评
-    path('poems/<int:poem_id>/critics/<int:critic_id>/', views.poem_critic, name='poem_critic'),  # 批评
+    path('poem/<int:poem_id>/', views.poem, name='poem'),  # 空白
+
+    path('poem/<int:poem_id>/translations/', views.poem_translations, name='poem_translations'),
+    path('translation/<int:translation_id>/', views.poem_translation, name='poem_translation'),  # 译文
+
+    path('poem/<int:poem_id>/questions/', views.poem_questions, name='poem_questions'),  # 问
+    path('question/<int:question_id>/', views.poem_question, name='poem_question'),
+    path('answer/<answer_id>/delete/', views.delete_answer, name='delete_answer'),
+
+    path('poem/<int:poem_id>/critics/', views.poem_critics, name='poem_critics'),  # 批评
+    path('poem/<int:poem_id>/critics/<int:critic_id>/', views.poem_critic, name='poem_critic'),  # 批评
     # path('poems/<int:poem_id>/<int:tabnum>/', views.poem, name='poem'),  # 分解
     # path('poems/<int:poem_id>/<int:tabnum>/', views.poem, name='poem'),  # 查词
 

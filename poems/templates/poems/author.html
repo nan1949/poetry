@@ -11,7 +11,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h5>
-                <a href="/poems/{{ poem.id }}/">{{ poem.title }}</a>
+                <a href="/poem/{{ poem.id }}/">{{ poem.title }}</a>
             </h5>
         </div>
         <div class="panel-body">
@@ -26,7 +26,6 @@
   {% empty %}
     There are no poems for this author yet.
   {% endfor %}
-
 </div>
 <div class="col-md-6">
   <div class="d-flex align-items-end">

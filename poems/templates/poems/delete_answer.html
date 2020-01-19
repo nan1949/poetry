@@ -1,0 +1,7 @@
+
+
+  <form action="/answer/{{ answer.id }}/delete/" method="post">
+      {% csrf_token %}
+      <h1>删除您的回答："{{ answer.title }}"？</h1>
+      <button name="'submit" class="btn btn-primary">确定</button>
+  </form>

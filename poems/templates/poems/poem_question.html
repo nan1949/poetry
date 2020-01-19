@@ -3,10 +3,13 @@
 {% block poem-question %}active{% endblock poem-question %}
 
 {% block content-r %}
-<div>{{ question.question }}</div>
+<p>{{ question.title }}</p>
+<p>{{ question.text }}</p>
 <div><a href="/new_answer/{{ question.id }}/">answer</a></div>
 {% for answer in question.answer_set.all %}
-  <p>{{ answer.answer }}</p>
+  <p>{{ answer.answer }}
+    <a href="/answer/{{ answer.id }}/delete" >delete</a>
+  </p>
 {% endfor %}
 
 {% endblock content-r %}

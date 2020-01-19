@@ -6,7 +6,7 @@
   {% for author in authors %}
     <div class="col border border-primary mt-3">
         <p>
-            <a href="/authors/{{ author.id }}/"><strong>{{ author.name }}</strong></a>
+            <a href="/author/{{ author.id }}/"><strong>{{ author.name }}</strong></a>
         </p>
         <p class="text-muted">{{ author.born|date:'F d, Y' }} - {{ author.died|date:'F d, Y' }}</p>
         <p>{{ author.detail|slice:":150" }}...</p>

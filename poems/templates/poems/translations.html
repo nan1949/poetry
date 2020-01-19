@@ -6,11 +6,11 @@
     <div class="border border-primary mt-3">
         <div class="d-flex justify-content-between">
           <div>
-            <a href="/poems/{{ translation.poem.id }}/">{{ translation.poem.title }}</a>:
+            <a href="/poem/{{ translation.poem.id }}/">{{ translation.poem.title }}</a>:
           </div>
-          <div>{{ translation.poem.author.name_en }}</div>
+          <div>{{ translation.title }}</div>
         </div>
-        <p>{{ translation }}</p>
+        <p>{{ translation.text|linebreaks }}</p>
     </div>
   {% endfor %}
 </div>

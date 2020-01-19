@@ -6,18 +6,16 @@
   </div>
   <div class="col-md-6">
     <ul class="nav nav-pills">
-      <li class="nav-item">
-        <a class="nav-link disabled {% block poem-dictionary %}{% endblock poem-dictionary %}"
-                              href="">查词</a>
-      </li>
-      <li class="nav-item"><a class="nav-link {% block poem-translation %}{% endblock poem-translation %}"
-                              href="/poems/{{ poem.id }}/translations/{{ translations.first.id }}/">译文</a></li>
+
+      <li class="nav-item"><a class="nav-link {% block translation %}{% endblock translation %}"
+                              href="/poem/{{ poem.id }}/translations">译文</a></li>
       <li class="nav-item"><a class="nav-link {% block poem-question %}{% endblock poem-question %}"
-                              href="/poems/{{ poem.id }}/questions">问·答</a></li>
-      <li class="nav-item"><a class="nav-link {% block poem-critic %}{% endblock poem-critic %}" href="">批评</a></li>
-      <li class="nav-item"><a class="nav-link {% block poem-analysis %}{% endblock poem-analysis %}" href="">分解</a></li>
-      <li class="nav-item"><a class="nav-link {% block poem-blank %}{% endblock poem-blank %}"
-                              href="/poems/{{ poem.id }}/">空白</a></li>
+                              href="/poem/{{ poem.id }}/questions">问·答</a></li>
+      <li class="nav-item"><a class="nav-link disabled {% block poem-critic %}{% endblock poem-critic %}" href="">批评</a></li>
+      <li class="nav-item"><a class="nav-link disabled {% block poem-analysis %}{% endblock poem-analysis %}" href="">分解</a></li>
+      <li class="nav-item">
+        <a class="nav-link" target="_blank" href="http://youdao.com/">有道词典</a>
+      </li>
     </ul>
   </div>
 </div>

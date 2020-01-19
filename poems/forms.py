@@ -1,5 +1,5 @@
 from django import forms
-from .models import Author, Poem, Question, Answer
+from .models import Author, Poem, Translation, Question, Answer
 
 LANGUAGES = (
     (1, '英语'),
@@ -22,14 +22,12 @@ class AuthorForm(forms.ModelForm):
         model = Author
         fields = ['name', 'name_zh', 'language', 'born', 'died', 'detail']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': '外文名',
-                                              'class': 'form-control'}),
-            'name_zh': forms.TextInput(attrs={'placeholder': '中文名',
-                                              'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name_zh': forms.TextInput(attrs={'class': 'form-control'}),
             'language': forms.Select(attrs={'class': 'form-control'},
                                      choices=LANGUAGES),
             'born': forms.DateInput(attrs={'placeholder': 'yyyy-mm-dd',
-                'class': 'form-control'}),
+                                           'class': 'form-control'}),
             'died': forms.DateInput(attrs={'placeholder': 'yyyy-mm-dd', 'class': 'form-control'}),
             'detail': forms.Textarea(attrs={'class': 'form-control'}),
         }
@@ -40,7 +38,19 @@ class PoemForm(forms.ModelForm):
         model = Poem
         fields = ['title', 'text']
         widgets = {
-            'title': forms.TextInput(attrs={ 'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
+class TranslationForm(forms.ModelForm):
+    class Meta:
+        model = Translation
+        fields = ['title', 'translator', 'note', 'text']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'translator': forms.TextInput(attrs={'class': 'form-control'}),
+            'note': forms.Textarea(attrs={'class': 'form-control'}),
             'text': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
@@ -48,12 +58,9 @@ class PoemForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['category', 'title', 'author', 'text']
+        fields = ['title', 'text']
         widgets = {
-            'category': forms.Select(attrs={'class': 'form-control'},
-                                     choices=CATEGORIES),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'author': forms.TextInput(attrs={'class': 'form-control'}),
             'text': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
@@ -65,4 +72,3 @@ class AnswerForm(forms.ModelForm):
         widgets = {
             'answer': forms.Textarea(attrs={'class': 'form-control'}),
         }
-
